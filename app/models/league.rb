@@ -1,10 +1,10 @@
 class League < ApplicationRecord
-  has_many :locations, dependent: :destroy
-  has_many :teams, dependent: :destroy
-  has_many :games, dependent: :destroy
-  belongs_to :default_location, class_name: "Location", optional: true
-
   before_destroy :nullify_default_location
+
+  has_many :games, dependent: :destroy
+  has_many :teams, dependent: :destroy
+  has_many :locations, dependent: :destroy
+  belongs_to :default_location, class_name: "Location", optional: true
 
   enum :league_type, { ice: 0, street: 1 }
 
