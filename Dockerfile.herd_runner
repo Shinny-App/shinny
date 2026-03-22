@@ -22,4 +22,19 @@ USER root
 # Rust
 # RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
+# Ruby 4.0.2
+RUN apt-get update && apt-get install -y \
+      build-essential libssl-dev libreadline-dev zlib1g-dev \
+      libsqlite3-dev libyaml-dev libffi-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -fsSL https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.2.tar.gz -o /tmp/ruby.tar.gz \
+    && tar -xzf /tmp/ruby.tar.gz -C /tmp \
+    && cd /tmp/ruby-4.0.2 \
+    && ./configure --prefix=/usr/local --disable-install-doc \
+    && make -j"$(nproc)" \
+    && make install \
+    && rm -rf /tmp/ruby.tar.gz /tmp/ruby-4.0.2
+
+RUN gem install bundler --no-document && gem install rails -v '~> 8.1.2' --no-document
+
 USER runner
