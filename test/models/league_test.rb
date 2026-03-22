@@ -97,4 +97,12 @@ class LeagueTest < ActiveSupport::TestCase
     assert_equal 1, team_b_entry[:ties]
     assert_equal 2, team_b_entry[:games_played]
   end
+
+  test "destroying a league with a default_location does not raise a foreign key error" do
+    league = leagues(:ice_league)
+    location = locations(:main_rink)
+    league.update!(default_location: location)
+
+    assert_nothing_raised { league.destroy! }
+  end
 end

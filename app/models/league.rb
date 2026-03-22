@@ -4,6 +4,8 @@ class League < ApplicationRecord
   has_many :games, dependent: :destroy
   belongs_to :default_location, class_name: "Location", optional: true
 
+  before_destroy :nullify_default_location
+
   enum :league_type, { ice: 0, street: 1 }
 
   validates :name, presence: true
@@ -24,6 +26,10 @@ class League < ApplicationRecord
   end
 
   private
+
+  def nullify_default_location
+    update_column(:default_location_id, nil)
+  end
 
   def completed_games
     @completed_games ||= games.completed.includes(:home_team, :away_team)

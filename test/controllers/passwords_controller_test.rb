@@ -38,4 +38,12 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     get edit_password_path("invalid-token")
     assert_redirected_to new_password_path
   end
+
+  test "GET edit with valid token for deleted user redirects with error" do
+    user = users(:one)
+    token = user.generate_token_for(:password_reset)
+    user.destroy!
+    get edit_password_path(token)
+    assert_redirected_to new_password_path
+  end
 end
