@@ -96,4 +96,25 @@ class GameTest < ActiveSupport::TestCase
     leagues(:ice_league).update!(default_location: nil)
     assert_nil game.resolved_location
   end
+
+  test "requires home_score and away_score when completed" do
+    game = games(:scheduled_game)
+    game.status = :completed
+    assert_not game.valid?
+    assert_includes game.errors[:home_score], "can't be blank"
+    assert_includes game.errors[:away_score], "can't be blank"
+  end
+
+  test "completed game with both scores present is valid" do
+    game = games(:scheduled_game)
+    game.status = :completed
+    game.home_score = 3
+    game.away_score = 1
+    assert game.valid?
+  end
+
+  test "scheduled game without scores is valid" do
+    game = Game.new(valid_game_attrs)
+    assert game.valid?
+  end
 end

@@ -8,6 +8,8 @@ class Game < ApplicationRecord
   enum :status, { scheduled: 0, completed: 1, cancelled: 2 }
 
   validates :scheduled_at, presence: true
+  validates :home_score, presence: true, if: :completed?
+  validates :away_score, presence: true, if: :completed?
   validate :teams_belong_to_same_league
   validate :teams_are_different
   validate :scheduled_at_in_future, on: :create

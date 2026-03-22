@@ -83,4 +83,18 @@ class LeagueTest < ActiveSupport::TestCase
     assert_equal 0, street_team_entry[:points]
     assert_equal 0, street_team_entry[:games_played]
   end
+
+  test "standings does not count completed games with nil scores as ties" do
+    league = leagues(:ice_league)
+    standings = league.standings
+
+    # null_score_game is completed but has no scores; must not inflate ties or games_played
+    team_a_entry = standings.find { |s| s[:team] == teams(:team_a) }
+    team_b_entry = standings.find { |s| s[:team] == teams(:team_b) }
+
+    assert_equal 1, team_a_entry[:ties]
+    assert_equal 2, team_a_entry[:games_played]
+    assert_equal 1, team_b_entry[:ties]
+    assert_equal 2, team_b_entry[:games_played]
+  end
 end

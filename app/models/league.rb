@@ -12,7 +12,11 @@ class League < ApplicationRecord
     teams.map { |team|
       wins = completed_games.count { |g| winner(g) == team }
       losses = completed_games.count { |g| loser(g) == team }
-      ties = completed_games.count { |g| g.home_score == g.away_score && (g.home_team == team || g.away_team == team) }
+      ties = completed_games.count { |g|
+        !g.home_score.nil? && !g.away_score.nil? &&
+          g.home_score == g.away_score &&
+          (g.home_team == team || g.away_team == team)
+      }
       games_played = wins + losses + ties
       points = (wins * 2) + (ties * 1)
       { team: team, wins: wins, losses: losses, ties: ties, games_played: games_played, points: points }
@@ -26,11 +30,13 @@ class League < ApplicationRecord
   end
 
   def winner(game)
+    return nil if game.home_score.nil? || game.away_score.nil?
     return nil if game.home_score == game.away_score
     game.home_score > game.away_score ? game.home_team : game.away_team
   end
 
   def loser(game)
+    return nil if game.home_score.nil? || game.away_score.nil?
     return nil if game.home_score == game.away_score
     game.home_score < game.away_score ? game.home_team : game.away_team
   end

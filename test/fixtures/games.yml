@@ -30,3 +30,10 @@ cancelled_game:
   away_team_id: <%= ActiveRecord::FixtureSet.identify(:team_b) %>
   scheduled_at: <%= 3.days.ago.to_fs(:db) %>
   status: 2
+
+null_score_game:
+  league: ice_league
+  home_team_id: <%= ActiveRecord::FixtureSet.identify(:team_a) %>
+  away_team_id: <%= ActiveRecord::FixtureSet.identify(:team_b) %>
+  scheduled_at: <%= 4.days.ago.to_fs(:db) %>
+  status: 1
