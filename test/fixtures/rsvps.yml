@@ -1,0 +1,5 @@
+rsvp_one:
+  user: one
+  game: scheduled_game
+  response: 0
+  responded_at: <%= 2.days.ago.to_fs(:db) %>

@@ -18,6 +18,6 @@ class RegistrationsController < ApplicationController
   private
 
   def registration_params
-    params.expect(user: [:email_address, :password, :password_confirmation, :display_name])
+    params.expect(user: [ :email_address, :password, :password_confirmation, :display_name ])
   end
 end

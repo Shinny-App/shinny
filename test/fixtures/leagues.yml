@@ -1,0 +1,11 @@
+ice_league:
+  name: Winter Ice League
+  description: A competitive ice hockey league
+  league_type: 0
+  active: true
+
+street_league:
+  name: Summer Street League
+  description: A casual street hockey league
+  league_type: 1
+  active: true

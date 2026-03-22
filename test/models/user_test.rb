@@ -56,4 +56,22 @@ class UserTest < ActiveSupport::TestCase
     assert_respond_to user, :sessions
     assert_includes user.sessions, sessions(:one)
   end
+
+  test "has_many memberships" do
+    user = users(:one)
+    assert_respond_to user, :memberships
+    assert_includes user.memberships, memberships(:player_one_team_a)
+  end
+
+  test "has_many teams through memberships" do
+    user = users(:one)
+    assert_respond_to user, :teams
+    assert_includes user.teams, teams(:team_a)
+  end
+
+  test "has_many rsvps" do
+    user = users(:one)
+    assert_respond_to user, :rsvps
+    assert_includes user.rsvps, rsvps(:rsvp_one)
+  end
 end

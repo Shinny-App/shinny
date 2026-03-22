@@ -1,0 +1,11 @@
+team_a:
+  name: Team Alpha
+  league: ice_league
+
+team_b:
+  name: Team Beta
+  league: ice_league
+
+street_team:
+  name: Street Sharks
+  league: street_league
