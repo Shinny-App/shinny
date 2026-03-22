@@ -37,4 +37,8 @@ RUN apt-get update && apt-get install -y \
 
 RUN gem install bundler --no-document && gem install rails -v '~> 8.1.2' --no-document
 
+# Pre-install application gems so workers don't compile native extensions at runtime
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
 USER runner
