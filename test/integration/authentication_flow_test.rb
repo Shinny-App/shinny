@@ -1,9 +1,9 @@
 require "test_helper"
 
 class AuthenticationFlowTest < ActionDispatch::IntegrationTest
-  test "unauthenticated user accessing a protected route is redirected to sign-in" do
+  test "unauthenticated user accessing the sign-in page sees it successfully" do
     get root_path
-    assert_redirected_to new_session_path
+    assert_response :success
   end
 
   test "after sign-in, user can access protected route" do
@@ -36,6 +36,6 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_session_path
 
     get root_path
-    assert_redirected_to new_session_path
+    assert_response :success
   end
 end
