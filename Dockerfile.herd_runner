@@ -35,6 +35,6 @@ RUN apt-get update && apt-get install -y \
     && make install \
     && rm -rf /tmp/ruby.tar.gz /tmp/ruby-4.0.2
 
-USER runner
+RUN gem install bundler --no-document && gem install rails -v '~> 8.1.2' --no-document
 
-RUN gem install bundler rails -v '~> 8.1.2' --no-document
+USER runner
