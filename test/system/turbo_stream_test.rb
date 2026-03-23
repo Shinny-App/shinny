@@ -18,7 +18,7 @@ class TurboStreamTest < ApplicationSystemTestCase
     assert_selector "#game_#{game.id}_rsvp_buttons"
 
     # The roster should be updated
-    assert_selector "#game_#{game.id}_roster"
+    assert_selector "#game_#{game.id}_team_#{teams(:team_a).id}_roster"
   end
 
   test "score entry turbo stream updates score display" do

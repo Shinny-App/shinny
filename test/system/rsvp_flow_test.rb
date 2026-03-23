@@ -53,7 +53,7 @@ class RsvpFlowTest < ApplicationSystemTestCase
     click_button "I'm in"
 
     # The roster section should update to show the user
-    within "#game_#{@game.id}_roster" do
+    within "#game_#{@game.id}_team_#{teams(:team_a).id}_roster" do
       assert_text @user.display_name
     end
   end
