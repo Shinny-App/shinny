@@ -1,0 +1,65 @@
+<div class="max-w-lg mx-auto px-4 py-6">
+  <%= turbo_stream_from @game %>
+  <%= turbo_stream_from "league_#{@game.league_id}_standings" %>
+
+  <div class="mb-6">
+    <%= link_to "← Schedule", dashboard_path, class: "text-sm text-blue-600 hover:text-blue-800" %>
+  </div>
+
+  <%# Game header %>
+  <div class="bg-white rounded-lg shadow p-6 mb-6">
+    <div class="text-center">
+      <time class="text-sm text-gray-500" datetime="<%= @game.scheduled_at.iso8601 %>">
+        <%= @game.scheduled_at.strftime("%A, %B %-d, %Y · %-I:%M %p") %>
+      </time>
+
+      <div class="text-2xl font-bold mt-2 text-gray-900">
+        <%= @game.home_team.name %> vs <%= @game.away_team.name %>
+      </div>
+
+      <% if @game.resolved_location %>
+        <div class="text-gray-500 mt-1">
+          📍 <%= @game.resolved_location.name %>
+          <% if @game.resolved_location.address.present? %>
+            <br><span class="text-xs text-gray-400"><%= @game.resolved_location.address %></span>
+          <% end %>
+        </div>
+      <% end %>
+
+      <% if @game.cancelled? %>
+        <div class="mt-3"><span class="text-red-600 font-medium bg-red-50 px-3 py-1 rounded">Cancelled</span></div>
+      <% end %>
+    </div>
+
+    <%# Score display %>
+    <%= render "games/score_display", game: @game %>
+  </div>
+
+  <%# RSVP section — only for team members %>
+  <% if @user_team %>
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-lg font-semibold mb-4">RSVP</h2>
+
+      <% if @game.rsvp_deadline.present? && !@game.rsvp_deadline_passed? %>
+        <p class="text-xs text-gray-400 mb-3">
+          Deadline: <%= @game.rsvp_deadline.strftime("%b %-d, %-I:%M %p") %>
+        </p>
+      <% end %>
+
+      <%= render "games/rsvp_buttons", game: @game, rsvp: @user_rsvp, user_team: @user_team %>
+
+      <%= render "games/rsvp_counts", game: @game, team: @user_team %>
+    </div>
+
+    <%# Roster %>
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-lg font-semibold mb-4">Roster</h2>
+      <%= render "games/roster", game: @game, team: @user_team %>
+    </div>
+  <% end %>
+
+  <%# Score entry for captains %>
+  <% if @is_captain && !@game.cancelled? %>
+    <%= render "games/score_form", game: @game, is_captain: @is_captain %>
+  <% end %>
+</div>

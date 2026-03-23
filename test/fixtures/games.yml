@@ -1,39 +1,58 @@
 scheduled_game:
   league: ice_league
-  home_team_id: <%= ActiveRecord::FixtureSet.identify(:team_a) %>
-  away_team_id: <%= ActiveRecord::FixtureSet.identify(:team_b) %>
-  location: main_rink
-  scheduled_at: <%= 1.week.from_now.to_fs(:db) %>
+  home_team: team_a
+  away_team: team_b
+  scheduled_at: <%= 3.days.from_now %>
   status: 0
+  location: main_rink
 
 completed_game:
   league: ice_league
-  home_team_id: <%= ActiveRecord::FixtureSet.identify(:team_a) %>
-  away_team_id: <%= ActiveRecord::FixtureSet.identify(:team_b) %>
-  scheduled_at: <%= 1.week.ago.to_fs(:db) %>
+  home_team: team_a
+  away_team: team_b
+  scheduled_at: <%= 3.days.ago %>
+  status: 1
   home_score: 3
   away_score: 1
-  status: 1
+  location: main_rink
 
 tied_game:
   league: ice_league
-  home_team_id: <%= ActiveRecord::FixtureSet.identify(:team_a) %>
-  away_team_id: <%= ActiveRecord::FixtureSet.identify(:team_b) %>
-  scheduled_at: <%= 2.weeks.ago.to_fs(:db) %>
+  home_team: team_b
+  away_team: team_a
+  scheduled_at: <%= 5.days.ago %>
+  status: 1
   home_score: 2
   away_score: 2
-  status: 1
 
 cancelled_game:
   league: ice_league
-  home_team_id: <%= ActiveRecord::FixtureSet.identify(:team_a) %>
-  away_team_id: <%= ActiveRecord::FixtureSet.identify(:team_b) %>
-  scheduled_at: <%= 3.days.ago.to_fs(:db) %>
+  home_team: team_a
+  away_team: team_b
+  scheduled_at: <%= 1.day.from_now %>
   status: 2
 
 null_score_game:
   league: ice_league
-  home_team_id: <%= ActiveRecord::FixtureSet.identify(:team_a) %>
-  away_team_id: <%= ActiveRecord::FixtureSet.identify(:team_b) %>
-  scheduled_at: <%= 4.days.ago.to_fs(:db) %>
+  home_team: team_a
+  away_team: team_b
+  scheduled_at: <%= 7.days.ago %>
   status: 1
+
+deadline_passed_game:
+  league: ice_league
+  home_team: team_a
+  away_team: team_b
+  scheduled_at: <%= 1.day.from_now %>
+  status: 0
+  rsvp_deadline: <%= 1.hour.ago %>
+  location: main_rink
+
+deadline_future_game:
+  league: ice_league
+  home_team: team_a
+  away_team: team_b
+  scheduled_at: <%= 5.days.from_now %>
+  status: 0
+  rsvp_deadline: <%= 4.days.from_now %>
+  location: main_rink

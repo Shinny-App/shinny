@@ -1,0 +1,38 @@
+<div id="game_<%= game.id %>_rsvp_buttons">
+  <% if game.completed? || game.cancelled? || game.rsvp_deadline_passed? %>
+    <%# Read-only status %>
+    <% if rsvp %>
+      <p class="text-sm">Your response: <span class="font-medium <%= rsvp_status_class(rsvp.response) %>"><%= rsvp_status_label(rsvp.response) %></span></p>
+    <% else %>
+      <p class="text-sm text-gray-400">Not responded</p>
+    <% end %>
+    <% if game.rsvp_deadline_passed? && !game.completed? && !game.cancelled? %>
+      <p class="text-xs text-gray-400 mt-1">RSVP deadline has passed</p>
+    <% end %>
+  <% else %>
+    <%# Interactive buttons %>
+    <div class="flex gap-2" data-controller="rsvp">
+      <% %w[yes no maybe].each do |resp| %>
+        <% is_selected = rsvp&.response == resp %>
+        <% button_class = if is_selected
+             case resp
+             when "yes" then "bg-green-600 text-white"
+             when "no" then "bg-red-600 text-white"
+             when "maybe" then "bg-yellow-500 text-white"
+             end
+           else
+             "bg-gray-100 text-gray-700 hover:bg-gray-200"
+           end %>
+        <% label = { "yes" => "I'm in", "no" => "Can't make it", "maybe" => "Maybe" }[resp] %>
+
+        <% path = game_rsvp_path(game) %>
+        <% method = rsvp ? :patch : :post %>
+        <%= button_to label, path,
+              method: method,
+              params: { response: resp },
+              class: "flex-1 px-4 py-2 rounded-lg text-sm font-medium transition #{button_class}",
+              data: { rsvp_target: "button", action: "rsvp#submit" } %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

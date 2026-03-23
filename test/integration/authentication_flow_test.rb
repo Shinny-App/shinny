@@ -1,14 +1,14 @@
 require "test_helper"
 
 class AuthenticationFlowTest < ActionDispatch::IntegrationTest
-  test "unauthenticated user accessing the sign-in page sees it successfully" do
+  test "unauthenticated user accessing root is redirected to sign-in" do
     get root_path
-    assert_response :success
+    assert_redirected_to new_session_url
   end
 
   test "after sign-in, user can access protected route" do
     user = users(:one)
-    post session_path, params: { email_address: user.email_address, password: "password123" }
+    post session_path, params: { email_address: user.email_address, password: "password" }
     assert_redirected_to root_path
     follow_redirect!
     assert_response :success
@@ -30,12 +30,12 @@ class AuthenticationFlowTest < ActionDispatch::IntegrationTest
 
   test "after sign-out, user cannot access protected routes" do
     user = users(:one)
-    post session_path, params: { email_address: user.email_address, password: "password123" }
+    post session_path, params: { email_address: user.email_address, password: "password" }
 
     delete session_path
     assert_redirected_to new_session_path
 
     get root_path
-    assert_response :success
+    assert_redirected_to new_session_url
   end
 end
