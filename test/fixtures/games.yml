@@ -1,0 +1,39 @@
+scheduled_game:
+  league: ice_league
+  home_team_id: <%= ActiveRecord::FixtureSet.identify(:team_a) %>
+  away_team_id: <%= ActiveRecord::FixtureSet.identify(:team_b) %>
+  location: main_rink
+  scheduled_at: <%= 1.week.from_now.to_fs(:db) %>
+  status: 0
+
+completed_game:
+  league: ice_league
+  home_team_id: <%= ActiveRecord::FixtureSet.identify(:team_a) %>
+  away_team_id: <%= ActiveRecord::FixtureSet.identify(:team_b) %>
+  scheduled_at: <%= 1.week.ago.to_fs(:db) %>
+  home_score: 3
+  away_score: 1
+  status: 1
+
+tied_game:
+  league: ice_league
+  home_team_id: <%= ActiveRecord::FixtureSet.identify(:team_a) %>
+  away_team_id: <%= ActiveRecord::FixtureSet.identify(:team_b) %>
+  scheduled_at: <%= 2.weeks.ago.to_fs(:db) %>
+  home_score: 2
+  away_score: 2
+  status: 1
+
+cancelled_game:
+  league: ice_league
+  home_team_id: <%= ActiveRecord::FixtureSet.identify(:team_a) %>
+  away_team_id: <%= ActiveRecord::FixtureSet.identify(:team_b) %>
+  scheduled_at: <%= 3.days.ago.to_fs(:db) %>
+  status: 2
+
+null_score_game:
+  league: ice_league
+  home_team_id: <%= ActiveRecord::FixtureSet.identify(:team_a) %>
+  away_team_id: <%= ActiveRecord::FixtureSet.identify(:team_b) %>
+  scheduled_at: <%= 4.days.ago.to_fs(:db) %>
+  status: 1

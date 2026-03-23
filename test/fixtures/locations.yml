@@ -1,0 +1,14 @@
+main_rink:
+  name: Main Arena
+  address: 123 Ice Way
+  league: ice_league
+
+backup_rink:
+  name: Backup Rink
+  address: 456 Frost Lane
+  league: ice_league
+
+street_court:
+  name: City Park Court
+  address: 789 Park Ave
+  league: street_league

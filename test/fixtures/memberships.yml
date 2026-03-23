@@ -1,0 +1,9 @@
+player_one_team_a:
+  user: one
+  team: team_a
+  role: 0
+
+player_two_team_b:
+  user: two
+  team: team_b
+  role: 0
