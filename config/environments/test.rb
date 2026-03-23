@@ -50,4 +50,7 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
+
+  # Disable Turbo cable stream auto-connection in system tests (rack_test has no WebSocket support)
+  config.turbo.test_connect_after_actions = []
 end
