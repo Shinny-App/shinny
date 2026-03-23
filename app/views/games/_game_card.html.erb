@@ -1,0 +1,50 @@
+<%= link_to game_path(game), class: "block bg-white rounded-lg shadow p-4 hover:shadow-md transition", id: "game_#{game.id}_card" do %>
+  <div class="flex justify-between items-start mb-2">
+    <time class="text-sm text-gray-500" datetime="<%= game.scheduled_at.iso8601 %>">
+      <%= game.scheduled_at.strftime("%a, %b %-d · %-I:%M %p") %>
+    </time>
+    <% if game.cancelled? %>
+      <span class="text-xs font-medium text-red-600 bg-red-50 px-2 py-0.5 rounded">Cancelled</span>
+    <% elsif game.completed? %>
+      <span class="text-xs font-medium text-gray-600 bg-gray-100 px-2 py-0.5 rounded">Final</span>
+    <% end %>
+  </div>
+
+  <div class="font-semibold text-gray-900 mb-1">
+    <%= game.home_team.name %> vs <%= game.away_team.name %>
+  </div>
+
+  <% if game.resolved_location %>
+    <div class="text-sm text-gray-500 mb-2">
+      📍 <%= game.resolved_location.name %>
+    </div>
+  <% end %>
+
+  <% if upcoming %>
+    <%# RSVP status and counts for upcoming games %>
+    <div class="flex justify-between items-center mt-3 pt-3 border-t border-gray-100">
+      <div>
+        <% user_rsvp = game.rsvps.find { |r| r.user_id == user.id } %>
+        <% if user_rsvp %>
+          <span class="text-sm font-medium <%= rsvp_status_class(user_rsvp.response) %>">
+            <%= rsvp_status_label(user_rsvp.response) %>
+          </span>
+        <% else %>
+          <span class="text-sm text-gray-400">Not responded</span>
+        <% end %>
+      </div>
+      <div id="game_<%= game.id %>_rsvp_counts">
+        <%= render "games/rsvp_counts", game: game, team: game.user_team(user) %>
+      </div>
+    </div>
+  <% else %>
+    <%# Score for past games %>
+    <% if game.completed? && game.home_score && game.away_score %>
+      <div class="mt-3 pt-3 border-t border-gray-100">
+        <span class="text-sm font-semibold text-gray-700">
+          <%= game.home_score %> - <%= game.away_score %>
+        </span>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

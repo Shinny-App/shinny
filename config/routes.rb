@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   resource :registration, only: %i[new create]
 
-  resource :dashboard, only: :show
+  resource :dashboard, only: :show, controller: "dashboard"
 
   resources :games, only: :show do
     resource :rsvp, only: %i[create update]

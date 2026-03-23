@@ -1,1 +1,37 @@
-<h1>Dashboard</h1>
+<div class="max-w-lg mx-auto px-4 py-6">
+  <h1 class="text-2xl font-bold mb-6">My Schedule</h1>
+
+  <% if Current.user.teams.any? %>
+    <% @upcoming_games.each do |game| %>
+      <%= turbo_stream_from game %>
+    <% end %>
+
+    <% if @upcoming_games.any? %>
+      <div class="space-y-4">
+        <% @upcoming_games.each do |game| %>
+          <%= render "games/game_card", game: game, user: Current.user, upcoming: true %>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500 text-center py-8">No upcoming games scheduled.</p>
+    <% end %>
+
+    <% if @past_games.any? %>
+      <details class="mt-8">
+        <summary class="text-lg font-semibold text-gray-600 cursor-pointer hover:text-gray-800">
+          Previous games
+        </summary>
+        <div class="space-y-4 mt-4">
+          <% @past_games.each do |game| %>
+            <%= render "games/game_card", game: game, user: Current.user, upcoming: false %>
+          <% end %>
+        </div>
+      </details>
+    <% end %>
+  <% else %>
+    <div class="text-center py-12">
+      <p class="text-gray-500 text-lg mb-4">You're not on any teams yet.</p>
+      <p class="text-gray-400">Join or create a league to get started.</p>
+    </div>
+  <% end %>
+</div>
