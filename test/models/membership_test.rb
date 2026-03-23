@@ -2,12 +2,12 @@ require "test_helper"
 
 class MembershipTest < ActiveSupport::TestCase
   test "belongs_to user" do
-    membership = memberships(:player_one_team_a)
+    membership = memberships(:captain_one_team_a)
     assert_equal users(:one), membership.user
   end
 
   test "belongs_to team" do
-    membership = memberships(:player_one_team_a)
+    membership = memberships(:captain_one_team_a)
     assert_equal teams(:team_a), membership.team
   end
 
@@ -15,7 +15,7 @@ class MembershipTest < ActiveSupport::TestCase
     assert_equal 0, Membership.roles[:player]
     assert_equal 1, Membership.roles[:captain]
     assert_equal 2, Membership.roles[:admin]
-    assert memberships(:player_one_team_a).player?
+    assert memberships(:captain_one_team_a).captain?
   end
 
   test "duplicate user and team raises validation error" do

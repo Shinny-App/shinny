@@ -9,7 +9,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   test "POST create with valid credentials creates session and redirects" do
     user = users(:one)
     assert_difference "Session.count", 1 do
-      post session_path, params: { email_address: user.email_address, password: "password123" }
+      post session_path, params: { email_address: user.email_address, password: "password" }
     end
     assert_redirected_to root_path
   end
@@ -24,7 +24,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "DELETE destroy logs out and redirects" do
     user = users(:one)
-    post session_path, params: { email_address: user.email_address, password: "password123" }
+    post session_path, params: { email_address: user.email_address, password: "password" }
 
     assert_difference "Session.count", -1 do
       delete session_path

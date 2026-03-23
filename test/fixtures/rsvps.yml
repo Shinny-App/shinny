@@ -2,4 +2,22 @@ rsvp_one:
   user: one
   game: scheduled_game
   response: 0
-  responded_at: <%= 2.days.ago.to_fs(:db) %>
+  responded_at: <%= 1.day.ago %>
+
+rsvp_three_yes:
+  user: three
+  game: scheduled_game
+  response: 0
+  responded_at: <%= 2.hours.ago %>
+
+rsvp_two_no:
+  user: two
+  game: scheduled_game
+  response: 1
+  responded_at: <%= 3.hours.ago %>
+
+rsvp_one_deadline:
+  user: one
+  game: deadline_passed_game
+  response: 0
+  responded_at: <%= 2.days.ago %>

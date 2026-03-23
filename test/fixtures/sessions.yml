@@ -2,3 +2,13 @@ one:
   user: one
   ip_address: 127.0.0.1
   user_agent: TestAgent
+
+two:
+  user: two
+  ip_address: 127.0.0.1
+  user_agent: TestAgent
+
+three:
+  user: three
+  ip_address: 127.0.0.1
+  user_agent: TestAgent

@@ -86,13 +86,13 @@ class GameTest < ActiveSupport::TestCase
 
   test "resolved_location returns league default_location when game location is nil" do
     leagues(:ice_league).update!(default_location: locations(:backup_rink))
-    game = games(:completed_game)
+    game = games(:null_score_game)
     assert_nil game.location
     assert_equal locations(:backup_rink), game.resolved_location
   end
 
   test "resolved_location returns nil when both are nil" do
-    game = games(:completed_game)
+    game = games(:null_score_game)
     leagues(:ice_league).update!(default_location: nil)
     assert_nil game.resolved_location
   end

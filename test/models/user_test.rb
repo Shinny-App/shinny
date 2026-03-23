@@ -60,7 +60,7 @@ class UserTest < ActiveSupport::TestCase
   test "has_many memberships" do
     user = users(:one)
     assert_respond_to user, :memberships
-    assert_includes user.memberships, memberships(:player_one_team_a)
+    assert_includes user.memberships, memberships(:captain_one_team_a)
   end
 
   test "has_many teams through memberships" do

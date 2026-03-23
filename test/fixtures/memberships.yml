@@ -1,9 +1,14 @@
-player_one_team_a:
+captain_one_team_a:
   user: one
   team: team_a
-  role: 0
+  role: 1
 
 player_two_team_b:
   user: two
   team: team_b
+  role: 0
+
+player_three_team_a:
+  user: three
+  team: team_a
   role: 0
