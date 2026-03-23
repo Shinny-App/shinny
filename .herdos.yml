@@ -11,7 +11,7 @@ agent:
 workers:
     max_concurrent: 3
     runner_label: herd-worker
-    timeout_minutes: 30
+    timeout_minutes: 60
 integrator:
     strategy: squash
     on_conflict: dispatch-resolver
