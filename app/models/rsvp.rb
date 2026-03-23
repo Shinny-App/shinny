@@ -12,14 +12,17 @@ class Rsvp < ApplicationRecord
   private
 
   def broadcast_rsvp_update
-    broadcast_replace_to game,
-      target: "game_#{game_id}_rsvp_counts",
-      partial: "games/rsvp_counts",
-      locals: { game: game, team: game.user_team(user) }
+    team = game.user_team(user)
+    return unless team
 
     broadcast_replace_to game,
-      target: "game_#{game_id}_roster",
+      target: "game_#{game_id}_team_#{team.id}_rsvp_counts",
+      partial: "games/rsvp_counts",
+      locals: { game: game, team: team }
+
+    broadcast_replace_to game,
+      target: "game_#{game_id}_team_#{team.id}_roster",
       partial: "games/roster",
-      locals: { game: game, team: game.user_team(user) }
+      locals: { game: game, team: team }
   end
 end

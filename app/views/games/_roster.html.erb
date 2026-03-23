@@ -1,4 +1,4 @@
-<div id="game_<%= game.id %>_roster">
+<div id="game_<%= game.id %>_team_<%= team&.id %>_roster">
   <% if team %>
     <% roster = game.roster_for_team(team) %>
 

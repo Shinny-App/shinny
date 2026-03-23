@@ -1,4 +1,4 @@
-<div id="game_<%= game.id %>_rsvp_counts" class="mt-6">
+<div id="game_<%= game.id %>_team_<%= team&.id %>_rsvp_counts" class="mt-6">
   <% if team %>
     <% counts = game.rsvp_counts_for_team(team) %>
     <span class="text-xs text-gray-500">

@@ -25,11 +25,13 @@ class RsvpsController < ApplicationController
       return
     end
 
-    @rsvp.update!(response: params[:response], responded_at: Time.current)
-
-    respond_to do |format|
-      format.turbo_stream { render_rsvp_stream }
-      format.html { redirect_to game_path(@game) }
+    if @rsvp.update(response: params[:response], responded_at: Time.current)
+      respond_to do |format|
+        format.turbo_stream { render_rsvp_stream }
+        format.html { redirect_to game_path(@game) }
+      end
+    else
+      redirect_to game_path(@game), alert: "Could not update RSVP."
     end
   end
 
@@ -64,10 +66,10 @@ class RsvpsController < ApplicationController
       turbo_stream.replace("game_#{@game.id}_rsvp_buttons",
         partial: "games/rsvp_buttons",
         locals: { game: @game, rsvp: @rsvp, user_team: @user_team }),
-      turbo_stream.replace("game_#{@game.id}_rsvp_counts",
+      turbo_stream.replace("game_#{@game.id}_team_#{@user_team.id}_rsvp_counts",
         partial: "games/rsvp_counts",
         locals: { game: @game, team: @user_team }),
-      turbo_stream.replace("game_#{@game.id}_roster",
+      turbo_stream.replace("game_#{@game.id}_team_#{@user_team.id}_roster",
         partial: "games/roster",
         locals: { game: @game, team: @user_team })
     ]
