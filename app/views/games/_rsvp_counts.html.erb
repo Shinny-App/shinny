@@ -1,8 +1,10 @@
-<% if team %>
-  <% counts = game.rsvp_counts_for_team(team) %>
-  <span class="text-xs text-gray-500">
-    <span class="text-green-600 font-medium"><%= counts[:yes] %> in</span>
-    · <span class="text-red-600 font-medium"><%= counts[:no] %> out</span>
-    · <span class="text-yellow-600 font-medium"><%= counts[:maybe] %> maybe</span>
-  </span>
-<% end %>
+<div id="game_<%= game.id %>_rsvp_counts" class="mt-6">
+  <% if team %>
+    <% counts = game.rsvp_counts_for_team(team) %>
+    <span class="text-xs text-gray-500">
+      <span class="text-green-600 font-medium"><%= counts[:yes] %> in</span>
+      · <span class="text-red-600 font-medium"><%= counts[:no] %> out</span>
+      · <span class="text-yellow-600 font-medium"><%= counts[:maybe] %> maybe</span>
+    </span>
+  <% end %>
+</div>

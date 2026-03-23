@@ -7,7 +7,5 @@
 
   <h1 class="text-2xl font-bold mb-6"><%= @league.name %> Standings</h1>
 
-  <div id="league_<%= @league.id %>_standings_table">
-    <%= render "leagues/standings_table", league: @league %>
-  </div>
+  <%= render "leagues/standings_table", league: @league %>
 </div>

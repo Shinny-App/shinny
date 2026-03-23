@@ -35,6 +35,16 @@ class ScoresControllerTest < ActionDispatch::IntegrationTest
     assert_nil game.home_score
   end
 
+  test "non-captain score attempt does not save (filter chain halted)" do
+    delete session_url
+    post session_url, params: { email_address: users(:two).email_address, password: "password" }
+    game = games(:scheduled_game)
+    assert_no_difference "game.reload.home_score.to_i" do
+      patch game_score_url(game), params: { score: { home_score: 99, away_score: 0 } }
+    end
+    assert_redirected_to game_url(game)
+  end
+
   test "score entry rejected for cancelled game" do
     game = games(:cancelled_game)
     patch game_score_url(game), params: { score: { home_score: 2, away_score: 1 } }

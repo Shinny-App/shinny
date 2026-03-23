@@ -1,8 +1,10 @@
-<% if game.completed? && game.home_score && game.away_score %>
-  <div class="text-center mt-4 pt-4 border-t border-gray-100">
-    <div class="text-3xl font-bold text-gray-900">
-      <%= game.home_score %> - <%= game.away_score %>
+<div id="game_<%= game.id %>_score">
+  <% if game.completed? && game.home_score && game.away_score %>
+    <div class="text-center mt-4 pt-4 border-t border-gray-100">
+      <div class="text-3xl font-bold text-gray-900">
+        <%= game.home_score %> - <%= game.away_score %>
+      </div>
+      <div class="text-xs text-gray-500 mt-1">Final</div>
     </div>
-    <div class="text-xs text-gray-500 mt-1">Final</div>
-  </div>
-<% end %>
+  <% end %>
+</div>

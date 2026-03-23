@@ -32,9 +32,7 @@
     </div>
 
     <%# Score display %>
-    <div id="game_<%= @game.id %>_score">
-      <%= render "games/score_display", game: @game %>
-    </div>
+    <%= render "games/score_display", game: @game %>
   </div>
 
   <%# RSVP section — only for team members %>
@@ -48,28 +46,20 @@
         </p>
       <% end %>
 
-      <div id="game_<%= @game.id %>_rsvp_buttons">
-        <%= render "games/rsvp_buttons", game: @game, rsvp: @user_rsvp, user_team: @user_team %>
-      </div>
+      <%= render "games/rsvp_buttons", game: @game, rsvp: @user_rsvp, user_team: @user_team %>
 
-      <div class="mt-6" id="game_<%= @game.id %>_rsvp_counts">
-        <%= render "games/rsvp_counts", game: @game, team: @user_team %>
-      </div>
+      <%= render "games/rsvp_counts", game: @game, team: @user_team %>
     </div>
 
     <%# Roster %>
     <div class="bg-white rounded-lg shadow p-6 mb-6">
       <h2 class="text-lg font-semibold mb-4">Roster</h2>
-      <div id="game_<%= @game.id %>_roster">
-        <%= render "games/roster", game: @game, team: @user_team %>
-      </div>
+      <%= render "games/roster", game: @game, team: @user_team %>
     </div>
   <% end %>
 
   <%# Score entry for captains %>
   <% if @is_captain && !@game.cancelled? %>
-    <div class="bg-white rounded-lg shadow p-6 mb-6" id="game_<%= @game.id %>_score_form">
-      <%= render "games/score_form", game: @game, is_captain: @is_captain %>
-    </div>
+    <%= render "games/score_form", game: @game, is_captain: @is_captain %>
   <% end %>
 </div>

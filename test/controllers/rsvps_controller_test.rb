@@ -25,8 +25,6 @@ class RsvpsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "RSVP rejected for non-team member" do
-    # User two is on team_b, but sign in as user two and try to RSVP on a game
-    # Actually user two IS on team_b which is in scheduled_game. Let's test with a user not on any team in the game.
     delete session_url
     # Create a scenario: user three is on team_a, so they CAN rsvp.
     # For unauthorized test, we need a user not on either team.
@@ -44,10 +42,52 @@ class RsvpsControllerTest < ActionDispatch::IntegrationTest
     assert_match "turbo-stream", response.body
   end
 
+  test "update redirects gracefully when no prior RSVP exists" do
+    game = games(:deadline_future_game)
+    Rsvp.where(user: @user, game: game).delete_all
+    assert_no_difference "Rsvp.count" do
+      patch game_rsvp_url(game), params: { response: "yes" }
+    end
+    assert_redirected_to game_url(game)
+  end
+
+  test "create is blocked after RSVP deadline" do
+    game = games(:deadline_passed_game)
+    Rsvp.where(user: @user, game: game).delete_all
+    assert_no_difference "Rsvp.count" do
+      post game_rsvp_url(game), params: { response: "yes" }
+    end
+    assert_redirected_to game_url(game)
+  end
+
+  test "update is blocked after RSVP deadline" do
+    game = games(:deadline_passed_game)
+    # rsvp_one_deadline fixture exists for this game
+    patch game_rsvp_url(game), params: { response: "no" }
+    assert_redirected_to game_url(game)
+    rsvp = Rsvp.find_by(user: @user, game: game)
+    assert_equal "yes", rsvp.response
+  end
+
+  test "invalid response param is rejected on create" do
+    game = games(:deadline_future_game)
+    Rsvp.where(user: @user, game: game).delete_all
+    assert_no_difference "Rsvp.count" do
+      post game_rsvp_url(game), params: { response: "invalid" }
+    end
+    assert_redirected_to game_url(game)
+  end
+
+  test "invalid response param is rejected on update" do
+    game = games(:scheduled_game)
+    original_response = rsvps(:rsvp_one).response
+    patch game_rsvp_url(game), params: { response: "bad_value" }
+    assert_redirected_to game_url(game)
+    assert_equal original_response, rsvps(:rsvp_one).reload.response
+  end
+
   test "deadline enforcement — RSVP on deadline-passed game is read only" do
     game = games(:deadline_passed_game)
-    # The controller doesn't block create after deadline (the view hides buttons).
-    # But we should still test the view shows read-only state.
     get game_url(game)
     assert_response :success
     assert_match "deadline has passed", response.body.downcase

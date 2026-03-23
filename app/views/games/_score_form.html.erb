@@ -1,17 +1,19 @@
-<% if is_captain && !game.cancelled? %>
-  <h2 class="text-lg font-semibold mb-4">Enter Score</h2>
-  <%= form_with url: game_score_path(game), method: :patch, class: "space-y-4" do |f| %>
-    <div class="flex gap-4 items-center">
-      <div class="flex-1">
-        <label class="block text-sm text-gray-600 mb-1"><%= game.home_team.name %></label>
-        <%= f.number_field :home_score, value: game.home_score, min: 0, class: "w-full border border-gray-300 rounded-lg px-3 py-2 text-center text-lg", name: "score[home_score]" %>
+<div id="game_<%= game.id %>_score_form" class="bg-white rounded-lg shadow p-6 mb-6">
+  <% if is_captain && !game.cancelled? %>
+    <h2 class="text-lg font-semibold mb-4">Enter Score</h2>
+    <%= form_with url: game_score_path(game), method: :patch, class: "space-y-4" do |f| %>
+      <div class="flex gap-4 items-center">
+        <div class="flex-1">
+          <label class="block text-sm text-gray-600 mb-1"><%= game.home_team.name %></label>
+          <%= f.number_field :home_score, value: game.home_score, min: 0, class: "w-full border border-gray-300 rounded-lg px-3 py-2 text-center text-lg", name: "score[home_score]" %>
+        </div>
+        <span class="text-gray-400 font-bold text-lg mt-5">—</span>
+        <div class="flex-1">
+          <label class="block text-sm text-gray-600 mb-1"><%= game.away_team.name %></label>
+          <%= f.number_field :away_score, value: game.away_score, min: 0, class: "w-full border border-gray-300 rounded-lg px-3 py-2 text-center text-lg", name: "score[away_score]" %>
+        </div>
       </div>
-      <span class="text-gray-400 font-bold text-lg mt-5">—</span>
-      <div class="flex-1">
-        <label class="block text-sm text-gray-600 mb-1"><%= game.away_team.name %></label>
-        <%= f.number_field :away_score, value: game.away_score, min: 0, class: "w-full border border-gray-300 rounded-lg px-3 py-2 text-center text-lg", name: "score[away_score]" %>
-      </div>
-    </div>
-    <%= f.submit "Save Score", class: "w-full bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition" %>
+      <%= f.submit "Save Score", class: "w-full bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 transition" %>
+    <% end %>
   <% end %>
-<% end %>
+</div>

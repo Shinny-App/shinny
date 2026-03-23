@@ -1,6 +1,8 @@
 class RsvpsController < ApplicationController
   before_action :set_game
   before_action :authorize_rsvp
+  before_action :validate_response_param
+  before_action :enforce_rsvp_deadline
 
   def create
     @rsvp = @game.rsvps.build(user: Current.user, response: params[:response], responded_at: Time.current)
@@ -16,7 +18,13 @@ class RsvpsController < ApplicationController
   end
 
   def update
-    @rsvp = @game.rsvps.find_by!(user: Current.user)
+    @rsvp = @game.rsvps.find_by(user: Current.user)
+
+    unless @rsvp
+      redirect_to game_path(@game), alert: "No RSVP found to update."
+      return
+    end
+
     @rsvp.update!(response: params[:response], responded_at: Time.current)
 
     respond_to do |format|
@@ -34,6 +42,19 @@ class RsvpsController < ApplicationController
   def authorize_rsvp
     unless @game.user_team(Current.user)
       redirect_to game_path(@game), alert: "You are not on a team in this game."
+    end
+  end
+
+  def validate_response_param
+    allowed = %w[yes no maybe]
+    unless allowed.include?(params[:response])
+      redirect_to game_path(@game), alert: "Invalid RSVP response."
+    end
+  end
+
+  def enforce_rsvp_deadline
+    if @game.rsvp_deadline_passed?
+      redirect_to game_path(@game), alert: "The RSVP deadline has passed."
     end
   end
 

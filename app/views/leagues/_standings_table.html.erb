@@ -1,31 +1,33 @@
-<% standings = league.standings %>
-<div class="overflow-x-auto">
-  <table class="w-full text-sm">
-    <thead>
-      <tr class="border-b border-gray-200 text-left text-gray-500">
-        <th class="py-2 pr-2">Team</th>
-        <th class="py-2 px-2 text-center">GP</th>
-        <th class="py-2 px-2 text-center">W</th>
-        <th class="py-2 px-2 text-center">L</th>
-        <th class="py-2 px-2 text-center">T</th>
-        <th class="py-2 pl-2 text-center font-semibold">PTS</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% standings.each do |row| %>
-        <tr class="border-b border-gray-100">
-          <td class="py-2 pr-2 font-medium text-gray-900"><%= row[:team].name %></td>
-          <td class="py-2 px-2 text-center text-gray-600"><%= row[:games_played] %></td>
-          <td class="py-2 px-2 text-center text-gray-600"><%= row[:wins] %></td>
-          <td class="py-2 px-2 text-center text-gray-600"><%= row[:losses] %></td>
-          <td class="py-2 px-2 text-center text-gray-600"><%= row[:ties] %></td>
-          <td class="py-2 pl-2 text-center font-bold text-gray-900"><%= row[:points] %></td>
+<div id="league_<%= league.id %>_standings_table">
+  <% standings = league.standings %>
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="border-b border-gray-200 text-left text-gray-500">
+          <th class="py-2 pr-2">Team</th>
+          <th class="py-2 px-2 text-center">GP</th>
+          <th class="py-2 px-2 text-center">W</th>
+          <th class="py-2 px-2 text-center">L</th>
+          <th class="py-2 px-2 text-center">T</th>
+          <th class="py-2 pl-2 text-center font-semibold">PTS</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+        <% standings.each do |row| %>
+          <tr class="border-b border-gray-100">
+            <td class="py-2 pr-2 font-medium text-gray-900"><%= row[:team].name %></td>
+            <td class="py-2 px-2 text-center text-gray-600"><%= row[:games_played] %></td>
+            <td class="py-2 px-2 text-center text-gray-600"><%= row[:wins] %></td>
+            <td class="py-2 px-2 text-center text-gray-600"><%= row[:losses] %></td>
+            <td class="py-2 px-2 text-center text-gray-600"><%= row[:ties] %></td>
+            <td class="py-2 pl-2 text-center font-bold text-gray-900"><%= row[:points] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 
-<% if standings.empty? %>
-  <p class="text-gray-500 text-center py-8">No games have been played yet.</p>
-<% end %>
+  <% if standings.empty? %>
+    <p class="text-gray-500 text-center py-8">No games have been played yet.</p>
+  <% end %>
+</div>

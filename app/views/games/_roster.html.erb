@@ -1,17 +1,19 @@
-<% if team %>
-  <% roster = game.roster_for_team(team) %>
+<div id="game_<%= game.id %>_roster">
+  <% if team %>
+    <% roster = game.roster_for_team(team) %>
 
-  <% [["In", :yes, "text-green-600"], ["Out", :no, "text-red-600"], ["Maybe", :maybe, "text-yellow-600"], ["No response", :no_response, "text-gray-400"]].each do |label, key, color_class| %>
-    <div class="mb-3">
-      <h3 class="text-sm font-medium <%= color_class %> mb-1"><%= label %> (<%= roster[key].size %>)</h3>
-      <% if roster[key].any? %>
-        <div class="flex flex-wrap gap-1">
-          <% roster[key].each do |item| %>
-            <% name = item.is_a?(Rsvp) ? item.user.display_name : item.display_name %>
-            <span class="text-xs bg-gray-50 px-2 py-1 rounded"><%= name %></span>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+    <% [["In", :yes, "text-green-600"], ["Out", :no, "text-red-600"], ["Maybe", :maybe, "text-yellow-600"], ["No response", :no_response, "text-gray-400"]].each do |label, key, color_class| %>
+      <div class="mb-3">
+        <h3 class="text-sm font-medium <%= color_class %> mb-1"><%= label %> (<%= roster[key].size %>)</h3>
+        <% if roster[key].any? %>
+          <div class="flex flex-wrap gap-1">
+            <% roster[key].each do |item| %>
+              <% name = item.is_a?(Rsvp) ? item.user.display_name : item.display_name %>
+              <span class="text-xs bg-gray-50 px-2 py-1 rounded"><%= name %></span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
+</div>
