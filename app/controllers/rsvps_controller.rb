@@ -41,20 +41,20 @@ class RsvpsController < ApplicationController
 
   def authorize_rsvp
     unless @game.user_team(Current.user)
-      redirect_to game_path(@game), alert: "You are not on a team in this game." and return
+      redirect_to game_path(@game), alert: "You are not on a team in this game."
     end
   end
 
   def validate_response_param
     allowed = %w[yes no maybe]
     unless allowed.include?(params[:response])
-      redirect_to game_path(@game), alert: "Invalid RSVP response." and return
+      redirect_to game_path(@game), alert: "Invalid RSVP response."
     end
   end
 
   def enforce_rsvp_deadline
     if @game.rsvp_deadline_passed?
-      redirect_to game_path(@game), alert: "The RSVP deadline has passed." and return
+      redirect_to game_path(@game), alert: "The RSVP deadline has passed."
     end
   end
 

@@ -1,5 +1,5 @@
 <div id="league_<%= league.id %>_standings_table">
-  <% standings = league.standings %>
+  <% standings = local_assigns.key?(:standings) ? standings : league.standings %>
   <div class="overflow-x-auto">
     <table class="w-full text-sm">
       <thead>
