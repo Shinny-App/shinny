@@ -1,0 +1,13 @@
+<div class="max-w-lg mx-auto px-4 py-6">
+  <%= turbo_stream_from "league_#{@league.id}_standings" %>
+
+  <div class="mb-6">
+    <%= link_to "← Schedule", dashboard_path, class: "text-sm text-blue-600 hover:text-blue-800" %>
+  </div>
+
+  <h1 class="text-2xl font-bold mb-6"><%= @league.name %> Standings</h1>
+
+  <div id="league_<%= @league.id %>_standings_table">
+    <%= render "leagues/standings_table", league: @league %>
+  </div>
+</div>
