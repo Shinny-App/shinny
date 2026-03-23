@@ -38,7 +38,7 @@ class ScoresController < ApplicationController
 
   def authorize_captain
     unless Current.user.captain_in_game?(@game)
-      redirect_to game_path(@game), alert: "Only captains can enter scores."
+      redirect_to game_path(@game), alert: "Only captains can enter scores." and return
     end
   end
 

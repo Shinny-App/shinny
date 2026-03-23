@@ -33,9 +33,7 @@
           <span class="text-sm text-gray-400">Not responded</span>
         <% end %>
       </div>
-      <div id="game_<%= game.id %>_rsvp_counts">
-        <%= render "games/rsvp_counts", game: game, team: game.user_team(user) %>
-      </div>
+      <%= render "games/rsvp_counts", game: game, team: game.user_team(user) %>
     </div>
   <% else %>
     <%# Score for past games %>
